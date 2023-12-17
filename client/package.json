@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.0.1",
     "firebase": "^10.7.1",
     "flowbite-react": "^0.7.0",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
