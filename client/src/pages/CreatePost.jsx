@@ -69,7 +69,7 @@ export default function CreatePost() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if (!res.ok) {
+      if (data.success === false) {
         setPublishError(data.message);
         return;
       }
