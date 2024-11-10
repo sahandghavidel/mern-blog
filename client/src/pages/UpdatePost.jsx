@@ -68,6 +68,7 @@ export default function UpdatePost() {
         (error) => {
           setImageUploadError("Image upload failed");
           setImageUploadProgress(null);
+          console.log(error.toString());
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {

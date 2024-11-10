@@ -1,5 +1,5 @@
 {
-  "name": "mern-blog",
+  "name": "eairee-blogs",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -22,5 +22,3 @@
     "nodemon": "^3.0.2"
   }
 }
-
- 
