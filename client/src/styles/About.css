@@ -1,0 +1,54 @@
+/* About.css */
+
+/* General Styling */
+.color-box {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    opacity: 0.4;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  
+  /* Animation Classes */
+  .animate-slide-left {
+    animation: slideLeft 1.5s forwards;
+  }
+  
+  .animate-slide-right {
+    animation: slideRight 1.5s forwards;
+  }
+  
+  /* Slide In Animations */
+  @keyframes slideLeft {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideRight {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  /* Backward Rotation Animation */
+  .rotate-backward {
+    animation: rotateBackward 10s linear infinite;
+  }
+  
+  @keyframes rotateBackward {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+  
