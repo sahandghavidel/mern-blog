@@ -20,14 +20,26 @@ body {
   font-family: sans-serif;
   margin: 1.5rem 0;
 }
-
 .post-content h2 {
   font-size: 1.4rem;
   font-family: sans-serif;
   margin: 1.5rem 0;
 }
 
+.post-content ul li {
+  margin: 1.15rem 0;
+  margin-left: 1.3rem;
+  list-style-type: circle;
+}
+
+.post-content ol li {
+  margin: 1.15rem 0;
+  margin-left: 1.3rem;
+  list-style-type: decimal;
+}
+
 .post-content a {
+  /* light blue */
   color: rgb(73, 149, 199);
   text-decoration: none;
 }
@@ -36,6 +48,24 @@ body {
   text-decoration: underline;
 }
 
-.dark .post-content a {
-  color: red;
+.post-content pre {
+  background-color: rgb(30, 41, 59);
+  border: 1px solid rgb(61, 69, 83);
+  color: rgb(232, 231, 231);
+  white-space: pre-wrap;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.post-content code {
+  background-color: rgb(236, 236, 236);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.dark .post-content code {
+  background-color: rgb(30, 41, 59);
+  border: 1px solid rgb(61, 69, 83);
 }
