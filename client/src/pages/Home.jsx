@@ -8,7 +8,9 @@ export default function Home() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch('/api/post/getPosts');
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/post/getPosts`
+      );
       const data = await res.json();
       setPosts(data.posts);
     };
@@ -17,7 +19,9 @@ export default function Home() {
   return (
     <div>
       <div className='flex flex-col gap-6 p-10  px-3 max-w-6xl mx-auto '>
-        <h1 className='text-3xl font-bold lg:text-6xl pt-10'>Welcome to my Blog</h1>
+        <h1 className='text-3xl font-bold lg:text-6xl pt-10'>
+          Welcome to my Blog
+        </h1>
         <p className='text-gray-500 text-xs sm:text-sm'>
           Welcome to my blog! Here you'll find a wide range of articles,
           tutorials, and resources designed to help you grow as a developer.

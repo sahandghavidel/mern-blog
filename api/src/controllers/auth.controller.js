@@ -56,12 +56,18 @@ export const signin = async (req, res, next) => {
 
     const { password: pass, ...rest } = validUser._doc;
 
-    res
-      .status(200)
-      .cookie('access_token', token, {
-        httpOnly: true,
-      })
-      .json(rest);
+    // Cookie options for cross-site requests
+    const cookieOptions = {
+      httpOnly: true,
+    };
+
+    // In production, set sameSite and secure for cross-site cookies
+    if (process.env.NODE_ENV === 'production') {
+      cookieOptions.sameSite = 'none';
+      cookieOptions.secure = true;
+    }
+
+    res.status(200).cookie('access_token', token, cookieOptions).json(rest);
   } catch (error) {
     next(error);
   }
@@ -77,12 +83,19 @@ export const google = async (req, res, next) => {
         process.env.JWT_SECRET
       );
       const { password, ...rest } = user._doc;
-      res
-        .status(200)
-        .cookie('access_token', token, {
-          httpOnly: true,
-        })
-        .json(rest);
+
+      // Cookie options for cross-site requests
+      const cookieOptions = {
+        httpOnly: true,
+      };
+
+      // In production, set sameSite and secure for cross-site cookies
+      if (process.env.NODE_ENV === 'production') {
+        cookieOptions.sameSite = 'none';
+        cookieOptions.secure = true;
+      }
+
+      res.status(200).cookie('access_token', token, cookieOptions).json(rest);
     } else {
       const generatedPassword =
         Math.random().toString(36).slice(-8) +
@@ -102,12 +115,19 @@ export const google = async (req, res, next) => {
         process.env.JWT_SECRET
       );
       const { password, ...rest } = newUser._doc;
-      res
-        .status(200)
-        .cookie('access_token', token, {
-          httpOnly: true,
-        })
-        .json(rest);
+
+      // Cookie options for cross-site requests
+      const cookieOptions = {
+        httpOnly: true,
+      };
+
+      // In production, set sameSite and secure for cross-site cookies
+      if (process.env.NODE_ENV === 'production') {
+        cookieOptions.sameSite = 'none';
+        cookieOptions.secure = true;
+      }
+
+      res.status(200).cookie('access_token', token, cookieOptions).json(rest);
     }
   } catch (error) {
     next(error);

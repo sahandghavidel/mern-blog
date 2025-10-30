@@ -27,9 +27,13 @@ export default function DashSidebar() {
   }, [location.search]);
   const handleSignout = async () => {
     try {
-      const res = await fetch('/api/user/signout', {
-        method: 'POST',
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/user/signout`,
+        {
+          method: 'POST',
+          credentials: 'include',
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);
