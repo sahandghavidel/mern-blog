@@ -20,7 +20,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === 'production'
-        ? ['https://mern-blog-client-steel.vercel.app', /\.vercel\.app$/]
+        ? ['https://blog.100jsprojects.com', /\.vercel\.app$/]
         : ['http://localhost:5173', 'http://localhost:3000'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
