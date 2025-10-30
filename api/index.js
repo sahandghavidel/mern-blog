@@ -27,8 +27,10 @@ app.use(
           ]
         : ['http://localhost:5173', 'http://localhost:3000'],
     credentials: true,
-
-// MongoDB connection for serverless
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-requested-with'],
+  })
+);
 let isConnected = false;
 const connectDB = async () => {
   if (isConnected) return;
