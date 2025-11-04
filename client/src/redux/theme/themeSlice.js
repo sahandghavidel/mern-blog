@@ -11,9 +11,12 @@ const themeSlice = createSlice({
         toggleTheme: (state) => {
             state.theme = state.theme === 'light' ? 'dark' : 'light';
         },
+        toggleSuccessTheme :(state) => {
+            state.theme = state.theme === "success" ? "green" : "red"
+        }
         }
 });
 
-export const {toggleTheme} = themeSlice.actions;
+export const {toggleTheme,toggleSuccessTheme} = themeSlice.actions;
 
 export default themeSlice.reducer;
