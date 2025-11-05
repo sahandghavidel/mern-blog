@@ -36,6 +36,12 @@ export default function DashProfile() {
   const [formData, setFormData] = useState({});
   const filePickerRef = useRef();
   const dispatch = useDispatch();
+  
+  // Add refs for input fields to clear them after update
+  const usernameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -43,6 +49,7 @@ export default function DashProfile() {
       setImageFileUrl(URL.createObjectURL(file));
     }
   };
+  
   useEffect(() => {
     if (imageFile) {
       uploadImage();
@@ -101,14 +108,63 @@ export default function DashProfile() {
     e.preventDefault();
     setUpdateUserError(null);
     setUpdateUserSuccess(null);
+    
     if (Object.keys(formData).length === 0) {
       setUpdateUserError('No changes made');
       return;
     }
+    
     if (imageFileUploading) {
       setUpdateUserError('Please wait for image to upload');
       return;
     }
+
+    // Prepare the update data - only include non-empty fields
+    const updateData = {};
+    
+    // Only include username if it's been changed and is not empty
+    if (formData.username !== undefined) {
+      const trimmedUsername = formData.username.trim();
+      if (trimmedUsername.length > 0) {
+        updateData.username = trimmedUsername;
+      } else if (trimmedUsername.length === 0) {
+        setUpdateUserError('Username cannot be empty');
+        return;
+      }
+    }
+
+    // Only include email if it's been changed and is not empty
+    if (formData.email !== undefined) {
+      const trimmedEmail = formData.email.trim();
+      if (trimmedEmail.length > 0) {
+        updateData.email = trimmedEmail;
+      } else if (trimmedEmail.length === 0) {
+        setUpdateUserError('Email cannot be empty');
+        return;
+      }
+    }
+
+    // Only include password if it's been changed and is not empty
+    if (formData.password !== undefined) {
+      const trimmedPassword = formData.password.trim();
+      if (trimmedPassword.length > 0) {
+        updateData.password = trimmedPassword;
+      }
+      // If password field was filled and then cleared, just skip it (don't send it)
+      // This prevents setting password to empty string
+    }
+
+    // Include profile picture if changed
+    if (formData.profilePicture) {
+      updateData.profilePicture = formData.profilePicture;
+    }
+
+    // Check if there are actually any valid fields to update
+    if (Object.keys(updateData).length === 0) {
+      setUpdateUserError('No valid changes to update');
+      return;
+    }
+
     try {
       dispatch(updateStart());
       const res = await fetch(
@@ -121,7 +177,7 @@ export default function DashProfile() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(updateData),
         }
       );
       const data = await res.json();
@@ -131,12 +187,29 @@ export default function DashProfile() {
       } else {
         dispatch(updateSuccess(data));
         setUpdateUserSuccess("User's profile updated successfully");
+        
+        // Clear the form data after successful update
+        setFormData({});
+        
+        // Clear the password input field
+        if (passwordRef.current) {
+          passwordRef.current.value = '';
+        }
+        
+        // Reset username and email to current values
+        if (usernameRef.current) {
+          usernameRef.current.value = data.username;
+        }
+        if (emailRef.current) {
+          emailRef.current.value = data.email;
+        }
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
       setUpdateUserError(error.message);
     }
   };
+  
   const handleDeleteUser = async () => {
     setShowModal(false);
     try {
@@ -180,6 +253,7 @@ export default function DashProfile() {
       console.log(error.message);
     }
   };
+  
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
       <h1 className='my-7 text-center font-semibold text-3xl'>Profile</h1>
@@ -235,6 +309,7 @@ export default function DashProfile() {
           placeholder='username'
           defaultValue={currentUser.username}
           onChange={handleChange}
+          ref={usernameRef}
         />
         <TextInput
           type='email'
@@ -242,12 +317,14 @@ export default function DashProfile() {
           placeholder='email'
           defaultValue={currentUser.email}
           onChange={handleChange}
+          ref={emailRef}
         />
         <TextInput
           type='password'
           id='password'
           placeholder='password'
           onChange={handleChange}
+          ref={passwordRef}
         />
         <Button
           type='submit'
